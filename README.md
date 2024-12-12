@@ -1,3 +1,6 @@
+### IP Calculator developed for educational purposes - academic project
+![image](https://github.com/user-attachments/assets/02119060-ee68-4b42-8bc4-a3aae5a8488b)
+
 MIT License
 
 Copyright (c) 2024 Jędrzej Koriat
