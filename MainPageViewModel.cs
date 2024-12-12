@@ -35,7 +35,7 @@ namespace IpCalculator
 
 		public ICommand CalculateIpCommand { get; }
 
-		public List<string> MaskList {  get; set; }
+		public List<string> MaskList { get; set; }
 
 		private string _ipAddressDecimal = string.Empty;
 		public string IpAddressDecimal
@@ -183,7 +183,7 @@ namespace IpCalculator
 		public MainPageViewModel()
 		{
 			List<string> maskListHolder = new List<string>();
-			maskListHolder.Add("/0 aka 0.0.0.0");
+			maskListHolder.Add("0.0.0.0");
 
 			char[] binaryMask = new char[32];
 			for (int i = 0; i < 32; i++)
@@ -229,10 +229,12 @@ namespace IpCalculator
 			MaskDecimal = maskDecimal;
 			MaskBinary = CalculateToBinary(MaskDecimal);
 
+			int hosts = CalculateHostNumber(MaskBinary);
+
 			NetworkAddressBinary = CalculateNetworkAddressBinary(IpAddressBinary, MaskBinary);
 			NetworkAddressDecimal = CalculateToDecimal(NetworkAddressBinary);
 
-			BroadcastAddressBinary = CalculateBroadcastAddressBinary(NetworkAddressBinary);
+			BroadcastAddressBinary = CalculateBroadcastAddressBinary(NetworkAddressBinary, hosts);
 			BroadcastAddressDecimal = CalculateToDecimal(BroadcastAddressBinary);
 
 			NumberOfHostsDecimal = CalculateNumberOfHosts(MaskBinary);
@@ -241,7 +243,7 @@ namespace IpCalculator
 			HostMinDecimal = CalculateToDecimal(HostMinBinary);
 
 			HostMaxBinary = CalculateHostMaxBinary(BroadcastAddressBinary);
-			HostMinDecimal = CalculateToDecimal(HostMaxBinary);
+			HostMaxDecimal = CalculateToDecimal(HostMaxBinary);
 
 		}
 
@@ -253,7 +255,7 @@ namespace IpCalculator
 			foreach (var number in numbers)
 			{
 				int num = int.Parse(number);
-				binary += Convert.ToString(num, 2).PadLeft(8, '0') + "."; 
+				binary += Convert.ToString(num, 2).PadLeft(8, '0') + ".";
 			}
 
 			return binary.TrimEnd('.');
@@ -266,13 +268,13 @@ namespace IpCalculator
 
 			foreach (var number in numbers)
 			{
-				text += $"{Convert.ToInt32(number, 2)}.";
+				text += $"{Convert.ToInt64(number, 2)}.";
 			}
 
 			return text.TrimEnd('.');
 		}
 
-		private string CalculateNetworkAddressBinary (string ipAddressBinary, string maskBinary)
+		private string CalculateNetworkAddressBinary(string ipAddressBinary, string maskBinary)
 		{
 			string networkAddressBinary = "";
 			for (int i = 0; i < ipAddressBinary.Length; i++)
@@ -289,23 +291,28 @@ namespace IpCalculator
 					networkAddressBinary += '.';
 				}
 			}
-			return networkAddressBinary;	
+			return networkAddressBinary;
 		}
 
-
-		// DO POPRAWY - NIE UWZGLEDNIONE KROPKI
-		private string CalculateBroadcastAddressBinary (string networkAddressBinary)
+		private string CalculateBroadcastAddressBinary(string networkAddressBinary, int numberOfHosts)
 		{
-			string broadcastAddressBinary = networkAddressBinary;
-			broadcastAddressBinary.TrimEnd('0');
-			for (int i = broadcastAddressBinary.Length; i <= 32; i++)
+			char[] broadcastAddressArray = networkAddressBinary.ToCharArray();
+			for (int i = broadcastAddressArray.Length - 1; i >= 0; i--)
 			{
-				broadcastAddressBinary += '1';
+				if (broadcastAddressArray[i] != '.')
+				{
+					broadcastAddressArray[i] = '1';
+					numberOfHosts--;
+					if (numberOfHosts == 0)
+					{
+						break;
+					}
+				}
 			}
-			return broadcastAddressBinary;
+			return new string(broadcastAddressArray);
 		}
 
-		private string CalculateNumberOfHosts (string maskBinary)
+		private string CalculateNumberOfHosts(string maskBinary)
 		{
 			int counter = 0;
 			for (int i = maskBinary.Length - 1; i >= 0; i--)
@@ -336,6 +343,23 @@ namespace IpCalculator
 			string hostMaxBinary = broadcastAddressBinary.Substring(0, broadcastAddressBinary.Length - 1);
 			hostMaxBinary += '0';
 			return hostMaxBinary;
+		}
+
+		private int CalculateHostNumber(string maskBinary)
+		{
+			int counter = 0;
+			for (int i = maskBinary.Length - 1; i >= 0; i--)
+			{
+				if (maskBinary[i] == '0')
+				{
+					counter++;
+				}
+				else if (maskBinary[i] == '1')
+				{
+					break;
+				}
+			}
+			return counter;
 		}
 	}
 

@@ -40,32 +40,32 @@
                 </Grid.RowDefinitions>
 
                 <!-- Column Headers -->
-                <Label Text="Property" FontAttributes="Bold" Grid.Column="0" Grid.Row="0" />
-                <Label Text="Decimal" FontAttributes="Bold" Grid.Column="1" Grid.Row="0" />
-                <Label Text="Binary" FontAttributes="Bold" Grid.Column="2" Grid.Row="0" />
+                <Label Text="" FontAttributes="Bold" Grid.Column="0" Grid.Row="0" />
+                <Label Text="Dziesietnie" FontAttributes="Bold" Grid.Column="1" Grid.Row="0" />
+                <Label Text="Binarnie" FontAttributes="Bold" Grid.Column="2" Grid.Row="0" />
 
                 <!-- IP Address -->
-                <Label Text="IP Address" Grid.Column="0" Grid.Row="1" />
+                <Label Text="Adres IP" Grid.Column="0" Grid.Row="1" />
                 <Label Text="{Binding IpAddressDecimal}" Grid.Column="1" Grid.Row="1" />
                 <Label Text="{Binding IpAddressBinary}" Grid.Column="2" Grid.Row="1" />
 
                 <!-- Mask -->
-                <Label Text="Mask" Grid.Column="0" Grid.Row="2" />
+                <Label Text="Maska" Grid.Column="0" Grid.Row="2" />
                 <Label Text="{Binding MaskDecimal}" Grid.Column="1" Grid.Row="2" />
                 <Label Text="{Binding MaskBinary}" Grid.Column="2" Grid.Row="2" />
 
                 <!-- Network Address -->
-                <Label Text="Network Address" Grid.Column="0" Grid.Row="3" />
+                <Label Text="Adres sieci" Grid.Column="0" Grid.Row="3" />
                 <Label Text="{Binding NetworkAddressDecimal}" Grid.Column="1" Grid.Row="3" />
                 <Label Text="{Binding NetworkAddressBinary}" Grid.Column="2" Grid.Row="3" />
 
                 <!-- Broadcast Address -->
-                <Label Text="Broadcast Address" Grid.Column="0" Grid.Row="4" />
+                <Label Text="Adres rozgloszeniowy" Grid.Column="0" Grid.Row="4" />
                 <Label Text="{Binding BroadcastAddressDecimal}" Grid.Column="1" Grid.Row="4" />
                 <Label Text="{Binding BroadcastAddressBinary}" Grid.Column="2" Grid.Row="4" />
 
                 <!-- Number of Hosts -->
-                <Label Text="Number of Hosts" Grid.Column="0" Grid.Row="5" />
+                <Label Text="Hostow w sieci" Grid.Column="0" Grid.Row="5" />
                 <Label Text="{Binding NumberOfHostsDecimal}" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2" />
 
                 <!-- Host Min -->
