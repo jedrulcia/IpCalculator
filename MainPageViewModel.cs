@@ -207,7 +207,6 @@ namespace IpCalculator
 					fourthOctet += binaryMask[j + 24];
 				}
 
-				// Tworzymy nową maskę w formacie /x aka a.b.c.d
 				string newMask = $"{Convert.ToInt32(firstOctet, 2)}." +
 					$"{Convert.ToInt32(secondOctet, 2)}." +
 					$"{Convert.ToInt32(thirdOctet, 2)}." +
@@ -326,7 +325,7 @@ namespace IpCalculator
 					break;
 				}
 			}
-			double result = Math.Pow(2, counter);
+			double result = Math.Pow(2, counter) - 2;
 
 			return result.ToString();
 		}
